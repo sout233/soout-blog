@@ -1,0 +1,46 @@
+<script>
+	import { animate } from 'animejs'; // 确保引入正确
+	import { onMount } from 'svelte';
+
+	/**
+	 * @type {import("animejs").TargetsParam}
+	 */
+	let containerNode;
+
+	function handleMouseEnter() {
+		animate(containerNode, {
+			padding: '2.125rem',
+			duration: 800,
+			ease: 'outElastic(1, .6)'
+		});
+	}
+
+	function handleMouseLeave() {
+		animate(containerNode, {
+			padding: '0rem',
+			duration: 100
+		});
+	}
+
+	onMount(() => {
+		animate(containerNode, {
+			opacity: [0, 1],
+            x: [{ from: '-20rem', ease: 'outExpo', duration: 1145 }],
+			duration: 1000,
+		});
+	});
+</script>
+
+<li
+	bind:this={containerNode}
+	onpointerenter={handleMouseEnter}
+	onpointerleave={handleMouseLeave}
+	class="block"
+>
+	<div
+		class="flex h-24 flex-col bg-base-200/90 outline-1 outline-black transition-all duration-300 ease-in-out hover:rounded-2xl hover:p-2 hover:shadow-2xl hover:outline-base-300"
+	>
+		<a class="text-2xl font-bold" href="/anything.md">About</a>
+		<a class="text-md" href="/anything.md">Lorem ipsum dolor sit amet.</a>
+	</div>
+</li>

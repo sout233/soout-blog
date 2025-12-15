@@ -1,0 +1,63 @@
+@import 'tailwindcss';
+@plugin 'daisyui' {
+	themes:
+		light --default,
+		dark --prefersdark,
+		cupcake;
+}
+
+.bbh-bartle-regular {
+	font-family: 'BBH Bartle', sans-serif;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.noto {
+	font-family: 'Noto Serif SC', serif;
+	font-optical-sizing: auto;
+	font-weight: 500;
+	font-style: normal;
+}
+
+.jetbrains-mono {
+  font-family: "JetBrains Mono", monospace;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.grid-bg {
+	--grid-color: rgba(255, 255, 255, 0.1);
+	--grid-size: 40px;
+
+	background-image:
+		linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+		linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+
+	background-size: var(--grid-size) var(--grid-size);
+
+	animation: moveGrid 1s linear infinite;
+}
+
+.grid-bg-white {
+	--grid-color: rgba(0, 0, 0, 0.1);
+	--grid-size: 40px;
+
+	background-image:
+		linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+		linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+
+	background-size: var(--grid-size) var(--grid-size);
+
+	animation: moveGrid 1s linear infinite;
+}
+
+@keyframes moveGrid {
+	0% {
+		background-position: 0 0;
+	}
+	100% {
+		/* 移动距离必须是 grid-size 的倍数，这样才能无缝衔接 */
+		background-position: var(--grid-size) var(--grid-size);
+	}
+}
