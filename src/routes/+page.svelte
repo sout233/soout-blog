@@ -27,8 +27,8 @@
 </script>
 
 <div class="noto flex flex-col justify-center">
-	<div class="grid-bg-white absolute top-14 z-0 h-screen w-screen"></div>
-	<div class="h-24 sm:h-12 md:h-0"></div>
+	<div class="grid-bg-white absolute top-14 z-0 h-screen w-screen pointer-events-none"></div>
+	<div class="h-8 sm:h-2 md:h-0"></div>
 	<ul>
 		{#each [1, 2, 3] as i}
 			<BlogItem />

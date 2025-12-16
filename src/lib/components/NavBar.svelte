@@ -267,7 +267,7 @@
 >
 	<h1
 		bind:this={titleNode}
-		class="bbh-bartle-regular m-0 bg-black p-0 text-5xl font-bold tracking-wide text-base-200"
+		class="bbh-bartle-regular m-0 bg-black p-0 text-4xl md:text-5xl font-bold tracking-wide text-base-200"
 	>
 		SOOOOOUT BLOG
 	</h1>
@@ -298,7 +298,7 @@
 	</svg>
 </div>
 
-<div class="justifty-end jetbrains-mono fixed top-0 right-0 h-12.5">
+<div class="justifty-end jetbrains-mono fixed top-auto md:top-0 right-0 h-full">
 	<a
 		bind:this={idkLinkNode}
 		onpointerenter={handleIDKAniEnter}

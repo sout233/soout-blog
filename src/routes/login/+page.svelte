@@ -1,5 +1,6 @@
 <script>
 	import { animate } from "animejs";
+	import { onMount } from "svelte";
 
 	function openModal() {
 		// @ts-ignore
@@ -10,6 +11,10 @@
 	 * @type {import("animejs").TargetsParam}
 	 */
 	let backButton;
+	/**
+	 * @type {import("animejs").TargetsParam}
+	 */
+	let loginPanel;
 
 	function handleBackButtonEnter() {
 		animate(backButton, {
@@ -28,10 +33,18 @@
 			ease: 'outElastic'
 		});
 	}
+
+	onMount(()=>{
+		animate(loginPanel,{
+			opacity: [0,1],
+			duration: 1000,
+		})
+	})
 </script>
 
 <div class="grid-bg-white noto flex h-screen flex-col justify-center">
 	<div
+		bind:this={loginPanel}
 		class="flex -translate-y-24 flex-col gap-2 bg-base-300 py-4 outline-2 transition-all duration-300 hover:gap-4 hover:p-2 hover:shadow-2xl hover:outline-base-300 md:ml-10 md:h-72 md:w-150 md:py-0"
 	>
 		<h1
