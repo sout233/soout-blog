@@ -21,12 +21,16 @@
 	let { data } = $props();
 </script>
 
+<svelte:head>
+    <title>[SOOOOOOUT BLOG] HERE IS NOTHING HERE</title>
+</svelte:head>
+
 <div class="noto flex flex-col justify-center">
 	<div class="grid-bg-white pointer-events-none absolute top-14 z-0 h-screen w-screen"></div>
 	<div class="h-8 sm:h-2 md:h-0"></div>
 	<ul>
 		{#each data.posts as post}
-			<BlogItem title={post.title} slug={post.slug} />
+			<BlogItem title={post.title} slug={post.slug} desc={post.desc} createdAt={new Date(post.created_at).toLocaleDateString()} />
 		{/each}
 	</ul>
 
