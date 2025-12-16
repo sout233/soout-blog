@@ -37,6 +37,7 @@
 	background-size: var(--grid-size) var(--grid-size);
 
 	animation: moveGrid 1s linear infinite;
+	/* visibility:collapse; */
 }
 
 .grid-bg-white {
