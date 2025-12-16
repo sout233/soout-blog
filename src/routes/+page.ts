@@ -3,7 +3,7 @@ import { supabase } from '$lib/supabaseClient';
 export async function load() {
     const { data: posts, error } = await supabase
         .from('posts')
-        .select('title, slug, created_at')
+        .select('title, slug, created_at, author, desc')
         .eq('is_published', true)
         .order('created_at', { ascending: false });
 

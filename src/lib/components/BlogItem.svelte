@@ -2,7 +2,7 @@
 	import { animate } from 'animejs'; // 确保引入正确
 	import { onMount } from 'svelte';
 
-	let { title, slug } = $props();
+	let { title, slug, desc, createdAt } = $props();
 
 	/**
 	 * @type {import("animejs").TargetsParam}
@@ -42,7 +42,10 @@
 	<div
 		class="flex h-24 flex-col bg-base-200/90 outline-1 outline-black transition-all duration-300 ease-in-out hover:rounded-2xl hover:p-2 hover:shadow-2xl hover:outline-base-300"
 	>
-		<a class="text-2xl font-bold" href="/post/{slug}">{title}</a>
-		<a class="text-md" href="/post/{slug}">Lorem ipsum dolor sit amet.</a>
+		<div class="justify-between flex flex-row w-full">
+			<a class="text-2xl font-bold" href="/post/{slug}">{title}</a>
+			<p class="text-4xl opacity-20 absolute right-0 top-0">{createdAt}</p>
+		</div>
+		<a class="text-md" href="/post/{slug}">{desc}</a>
 	</div>
 </li>
