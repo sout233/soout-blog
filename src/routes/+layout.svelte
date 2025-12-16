@@ -4,7 +4,6 @@
 	import NavBar from '$lib/components/NavBar.svelte';
 	import { onMount } from 'svelte';
 	import { supabase } from '$lib/supabaseClient';
-	import type { Session } from '@supabase/supabase-js';
 	import { userState } from '$lib/userData.svelte';
 
 	let { children } = $props();
