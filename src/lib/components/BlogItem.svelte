@@ -54,13 +54,13 @@
 		class="flex h-24 flex-col bg-base-200/90 outline-1 outline-black transition-all duration-300 ease-in-out hover:rounded-2xl hover:p-2 hover:shadow-2xl hover:outline-base-300"
 	>
 		<div class="flex w-full flex-row justify-between">
-			<a class="text-2xl font-bold" href="/post/{slug}">{title}</a>
+			<a class="text-xl md:text-2xl font-bold" href="/post/{slug}">{title}</a>
 			{#if isBrowserSupportSuperAnimation()}
 				<p class="absolute top-0 right-0 text-4xl opacity-20">{createdAt}</p>
 			{:else}
 				<p class="text-sm opacity-50">{createdAt}</p>
 			{/if}
 		</div>
-		<a class="text-md" href="/post/{slug}">{desc}</a>
+		<a class="text-[0.98rem]" href="/post/{slug}">{desc}</a>
 	</div>
 </li>
