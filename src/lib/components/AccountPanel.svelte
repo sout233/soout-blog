@@ -1,13 +1,25 @@
 <script lang="ts">
 	import { animate } from 'animejs';
 	import { userState } from '$lib/userData.svelte';
+	import { onMount } from 'svelte';
+	import { getBrowserInfo } from '$lib/utils/broswerCheck';
 
 	let userPanelNode: HTMLElement | null = $state(null);
 
 	let isHovering = $state(false);
 
+	let isMobile = $state(false);
+
+	onMount(() => {
+		const info = getBrowserInfo();
+		isMobile = info.isMobile;
+	});
+
 	function handleUserPanelMouseEnter() {
+		if (isMobile) return;
+
 		isHovering = true;
+
 		if (userPanelNode) {
 			animate(userPanelNode, {
 				width: '10rem',
@@ -24,7 +36,10 @@
 	}
 
 	function handleUserPanelMouseLeave() {
+		if (isMobile) return;
+
 		isHovering = false;
+
 		if (userPanelNode) {
 			animate(userPanelNode, {
 				width: '3rem',

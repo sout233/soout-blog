@@ -1,8 +1,9 @@
 <script>
 	import { onMount } from 'svelte';
 	import { animate, splitText, stagger, spring, utils, svg } from 'animejs';
+	import { isBrowserSupportSuperAnimation } from '$lib/utils/broswerCheck';
 
-    /** @type {HTMLElement} */
+	/** @type {HTMLElement} */
 	let titleNode;
 	/** @type {import("animejs").TextSplitter} */
 	let titleSplit;
@@ -18,6 +19,8 @@
 	let svgPath1;
 	/** @type {SVGPolygonElement} */
 	let svgPath2;
+
+	let isBrowserSupported = $state(true);
 
 	const initAnime = () => {
 		animate(containerNode, {
@@ -68,6 +71,8 @@
 	};
 
 	onMount(() => {
+		isBrowserSupported = isBrowserSupportSuperAnimation();
+
 		initAnime();
 
 		function animateRandomPoints() {
@@ -88,6 +93,8 @@
 	});
 
 	const handleMouseEnter = () => {
+		if (!isBrowserSupported) return;
+
 		animate(containerNode, {
 			height: '50vh',
 			duration: 400,
@@ -152,6 +159,8 @@
 	};
 
 	const handleMouseLeave = () => {
+		if (!isBrowserSupported) return;
+
 		animate(containerNode, {
 			height: '3.125rem',
 			duration: 600,
@@ -210,6 +219,8 @@
 	};
 
 	function handleIDKAniEnter() {
+		if (!isBrowserSupported) return;
+
 		animate(idkLinkNode, {
 			fontSize: '2.5rem',
 			duration: 400,
@@ -226,6 +237,8 @@
 	}
 
 	function handleLinkAniEnter() {
+		if (!isBrowserSupported) return;
+
 		animate(menuLinkNode, {
 			fontSize: '2.5rem',
 			duration: 400,
@@ -234,6 +247,8 @@
 	}
 
 	function handleLinkAniLeave() {
+		if (!isBrowserSupported) return;
+
 		animate(menuLinkNode, {
 			fontSize: '1rem',
 			duration: 400,
@@ -263,18 +278,29 @@
 	bind:this={containerNode}
 	onpointerenter={handleMouseEnter}
 	onpointerleave={handleMouseLeave}
-	class="grid-bg h-12.5 bg-black overflow-visible md:overflow-hidden z-10"
+	class="grid-bg z-10 h-12.5 overflow-visible bg-black md:overflow-hidden"
 >
 	<h1
 		bind:this={titleNode}
-		class="bbh-bartle-regular m-0 bg-black p-0 text-4xl md:text-5xl font-bold tracking-wide text-base-200"
+		class="bbh-bartle-regular m-0 bg-black p-0 text-4xl font-bold tracking-wide text-base-200 md:text-5xl"
 	>
 		SOOOOOUT BLOG
 	</h1>
 
+	{#if !isBrowserSupportSuperAnimation()}
+		<div class="justifty-end jetbrains-mono absolute top-14 right-0 h-full md:top-0">
+			<a
+				bind:this={idkLinkNode}
+				class="idk-link inline-block text-base-100/80"
+				href="https://www.soout.top">IDK</a
+			>
+			<a bind:this={menuLinkNode} class="menu-link inline-block text-base-100/80" href="/">LINK</a>
+		</div>
+	{/if}
+
 	<svg
 		viewBox="0 0 304 112"
-		class="motion-svg pointer-events-none absolute top-[10vh] -right-50 size-150 hidden md:block"
+		class="motion-svg pointer-events-none absolute top-[10vh] -right-50 hidden size-150 md:block"
 	>
 		<g
 			stroke-width="2"
@@ -298,19 +324,21 @@
 	</svg>
 </div>
 
-<div class="justifty-end jetbrains-mono fixed top-auto md:top-0 right-0 h-full">
-	<a
-		bind:this={idkLinkNode}
-		onpointerenter={handleIDKAniEnter}
-		onpointerleave={handleIDKAniLeave}
-		class="idk-link inline-block text-base-100/80"
-		href="https://www.soout.top">IDK</a
-	>
-	<a
-		bind:this={menuLinkNode}
-		onpointerenter={handleLinkAniEnter}
-		onpointerleave={handleLinkAniLeave}
-		class="menu-link inline-block text-base-100/80"
-		href="/">LINK</a
-	>
-</div>
+{#if isBrowserSupportSuperAnimation()}
+	<div class="justifty-end jetbrains-mono fixed top-auto right-0 h-full md:top-0">
+		<a
+			bind:this={idkLinkNode}
+			onpointerenter={handleIDKAniEnter}
+			onpointerleave={handleIDKAniLeave}
+			class="idk-link inline-block text-base-100/80"
+			href="https://www.soout.top">IDK</a
+		>
+		<a
+			bind:this={menuLinkNode}
+			onpointerenter={handleLinkAniEnter}
+			onpointerleave={handleLinkAniLeave}
+			class="menu-link inline-block text-base-100/80"
+			href="/">LINK</a
+		>
+	</div>
+{/if}
