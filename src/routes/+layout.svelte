@@ -1,36 +1,47 @@
 <script lang="ts">
-	import './layout.css';
-	import favicon from '$lib/assets/favicon.svg';
-	import NavBar from '$lib/components/NavBar.svelte';
-	import { onMount } from 'svelte';
-	import { supabase } from '$lib/supabaseClient';
-	import { userState } from '$lib/userData.svelte';
+    import './layout.css';
+    import favicon from '$lib/assets/favicon.svg';
+    import NavBar from '$lib/components/NavBar.svelte';
+    import { onMount } from 'svelte';
+    import { supabase } from '$lib/supabaseClient';
+    import { userState } from '$lib/userData.svelte';
+	import ToastContainer from '$lib/components/ToastContainer.svelte';
+	import { toast } from '$lib/toastQueue.svelte';
 
-	let { children } = $props();
+    let { children } = $props();
 
-	onMount(() => {
-		supabase.auth.getSession().then(({ data }) => {
-			userState.setSession(data.session);
-		});
+    onMount(() => {
+        // 测试 Toast 系统 (你可以在这里测试，也可以在任何组件里调用)
+        // toast.success('系统初始化成功！');
 
-		const {
-			data: { subscription }
-		} = supabase.auth.onAuthStateChange((event, session) => {
-			userState.setSession(session);
+        supabase.auth.getSession().then(({ data }) => {
+            userState.setSession(data.session);
+        });
 
-			if (event === 'SIGNED_OUT'){
-				console.log('User signed out');
-			}
-		});
+        const {
+            data: { subscription }
+        } = supabase.auth.onAuthStateChange((event, session) => {
+            userState.setSession(session);
 
-		return () => {
-			subscription.unsubscribe();
-		};
-	});
+            if (event === 'SIGNED_OUT'){
+                // 2. 现在的用法示例：
+                toast.info('您已安全退出');
+            } else if (event === 'SIGNED_IN') {
+                toast.success('欢迎回来！');
+            }
+        });
+
+        return () => {
+            subscription.unsubscribe();
+        };
+    });
 </script>
 
 <svelte:head><link rel="icon" href={favicon} /></svelte:head>
+
 <main>
-	<NavBar />
-	{@render children()}
+    <NavBar />
+    {@render children()}
+    
+    <ToastContainer />
 </main>
