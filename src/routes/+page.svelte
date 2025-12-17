@@ -5,6 +5,7 @@
 	import { userState } from '$lib/userData.svelte';
 	import { onMount } from 'svelte';
 	import { getBrowserInfo } from '$lib/utils/broswerCheck.js';
+	import { toast } from '$lib/toastQueue.svelte.js';
 
 	let svgHtml = `
     <svg
@@ -27,7 +28,7 @@
 		browserName: ''
 	});
 
-    let alertMessage = $state('');
+	let alertMessage = $state('');
 
 	onMount(() => {
 		const info = getBrowserInfo();
@@ -37,14 +38,21 @@
 		if (info.chromeVersion) {
 			status.browserName = 'Chrome';
 			status.isSupported = info.isChromeValid;
-            alertMessage = 'Chrome 或 Webview 版本过低，已禁用某些动画效果';
+			alertMessage = 'Chrome 或 Webview 版本过低，已禁用某些动画效果';
 		} else if (info.firefoxVersion) {
 			status.browserName = 'Firefox';
 			status.isSupported = info.isFirefoxValid;
-            alertMessage = 'Firefox 版本过低，已禁用某些动画效果';
-		} else if (info.isMobile) {
-            alertMessage = '已为移动端禁用部分动画效果';
-        }
+			alertMessage = 'Firefox 版本过低，已禁用某些动画效果';
+		}
+        
+        if (info.isMobile) {
+			alertMessage = '已为移动端禁用部分动画效果';
+			toast.warning(alertMessage);
+		}
+
+		if (!status.isSupported) {
+			toast.warning(alertMessage);
+		}
 	});
 </script>
 
