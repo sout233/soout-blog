@@ -1,4 +1,4 @@
-export type ToastLevel = 'info' | 'success' | 'warning' | 'error';
+export type ToastLevel = 'info' | 'success' | 'warning' | 'error' | 'wtf';
 
 export interface ToastItem {
     id: string;
@@ -30,6 +30,7 @@ class ToastManager {
     error(msg: string, duration = 4000) { this.add(msg, 'error', duration); }
     warning(msg: string, duration = 3000) { this.add(msg, 'warning', duration); }
     info(msg: string, duration = 3000) { this.add(msg, 'info', duration); }
+    wtf(msg: string, duration = 5000) { this.add(msg, 'wtf', duration); }
 }
 
 export const toast = new ToastManager();
