@@ -7,12 +7,16 @@
 		text,
 		href = '#',
 		icon,
-		className = 'btn btn-neutral'
+		className = 'btn btn-neutral',
+		rotate = '-5',
+		scale = '1.2',
 	}: {
 		text: string;
 		href?: string;
 		icon?: Snippet;
 		className?: string;
+		rotate?: string;
+		scale?: string;
 	} = $props();
 
 	let buttonElement: HTMLElement | null = $state(null);
@@ -20,9 +24,9 @@
 	function handlePointerEnter() {
 		if (buttonElement) {
 			animate(buttonElement, {
-				scale: 1.2,
+				scale: scale,
 				duration: 600,
-				rotate: -5,
+				rotate: rotate,
 				ease: 'outElastic'
 			});
 		}
