@@ -1,22 +1,34 @@
 <script lang="ts">
-	import AniButton from '$lib/components/AniButton.svelte';
-	import { animate } from 'animejs';
-	import { marked } from 'marked';
-	import { onMount } from 'svelte';
+    import AniButton from '$lib/components/AniButton.svelte';
+    import { animate } from 'animejs';
+    import { marked } from 'marked';
+    import { onMount } from 'svelte';
 
-	let { data } = $props();
+    import hljs from 'highlight.js';
+    
+    import 'highlight.js/styles/atom-one-dark.css'; 
 
-	let contentNode: HTMLElement;
+    let { data } = $props();
 
-	let postHtml = $derived(marked.parse(data.post.content));
+    let contentNode: HTMLElement;
 
-	onMount(() => {
-		animate(contentNode, {
-			x: [-100, 0],
-			duration: 800,
-			ease: 'outElastic'
-		});
-	});
+    let postHtml = $derived(marked.parse(data.post.content));
+
+    $effect(() => {
+        if (contentNode && postHtml) {
+            contentNode.querySelectorAll('pre code').forEach((block) => {
+                hljs.highlightElement(block as HTMLElement);
+            });
+        }
+    });
+
+    onMount(() => {
+        animate(contentNode, {
+            x: [-100, 0],
+            duration: 800,
+            ease: 'outElastic'
+        });
+    });
 </script>
 
 <svelte:head>
@@ -57,12 +69,12 @@
 	</header>
 
 	<article
-		class="noto mx-auto prose space-y-0 p-4 pt-10 prose-lg lg:prose-xl prose-headings:my-6 prose-p:my-4"
+		class="noto mx-auto prose prose-lg space-y-0 p-4 pt-10 lg:prose-xl prose-headings:my-6 prose-p:my-4 prose-pre:p-0"
 	>
 		<div class="markdown-body">
 			{@html postHtml}
 		</div>
 	</article>
 
-    <div class="h-24"></div>
+	<div class="h-24"></div>
 </div>
