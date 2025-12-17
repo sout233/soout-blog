@@ -3,6 +3,8 @@
 	import AniButton from '$lib/components/AniButton.svelte';
 	import AccountPanel from '$lib/components/AccountPanel.svelte';
 	import { userState } from '$lib/userData.svelte';
+	import { onMount } from 'svelte';
+	import { getBrowserInfo } from '$lib/utils/broswerCheck.js';
 
 	let svgHtml = `
     <svg
@@ -19,10 +21,35 @@
     `;
 
 	let { data } = $props();
+	let status = $state({
+		isMobile: false,
+		isSupported: true,
+		browserName: ''
+	});
+
+    let alertMessage = $state('');
+
+	onMount(() => {
+		const info = getBrowserInfo();
+
+		status.isMobile = info.isMobile;
+
+		if (info.chromeVersion) {
+			status.browserName = 'Chrome';
+			status.isSupported = info.isChromeValid;
+            alertMessage = 'Chrome 或 Webview 版本过低，已禁用某些动画效果';
+		} else if (info.firefoxVersion) {
+			status.browserName = 'Firefox';
+			status.isSupported = info.isFirefoxValid;
+            alertMessage = 'Firefox 版本过低，已禁用某些动画效果';
+		} else if (info.isMobile) {
+            alertMessage = '已为移动端禁用部分动画效果';
+        }
+	});
 </script>
 
 <svelte:head>
-    <title>[SOOOOOOUT BLOG] HERE IS NOTHING HERE</title>
+	<title>[SOOOOOOUT BLOG] HERE IS NOTHING HERE</title>
 </svelte:head>
 
 <div class="noto flex flex-col justify-center">
@@ -30,12 +57,21 @@
 	<div class="h-8 sm:h-2 md:h-0"></div>
 	<ul>
 		{#each data.posts as post}
-			<BlogItem title={post.title} slug={post.slug} desc={post.desc} createdAt={new Date(post.created_at).toLocaleDateString()} />
+			<BlogItem
+				title={post.title}
+				slug={post.slug}
+				desc={post.desc}
+				createdAt={new Date(post.created_at).toLocaleDateString()}
+			/>
 		{/each}
 	</ul>
 
 	{#if !userState.session}
-		<AniButton text="想要登入?" href="/login" {svgHtml} className='btn fixed right-4 bottom-4 btn-neutral' />
+		<AniButton text="想要登入?" href="/login" className="btn fixed right-4 bottom-4 btn-neutral">
+			{#snippet icon()}
+				{@html svgHtml}
+			{/snippet}
+		</AniButton>
 	{:else}
 		<AccountPanel />
 	{/if}

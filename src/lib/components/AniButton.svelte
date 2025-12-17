@@ -1,13 +1,25 @@
 <script lang="ts">
 	import { animate } from 'animejs';
 	import { fade } from 'svelte/transition';
+	import type { Snippet } from 'svelte';
 
-	let loginButton: HTMLElement | null = $state(null);
-	let { text, href = '#', svgHtml='', className='btn btn-neutral'} = $props();
+	let {
+		text,
+		href = '#',
+		icon,
+		className = 'btn btn-neutral'
+	}: {
+		text: string;
+		href?: string;
+		icon?: Snippet;
+		className?: string;
+	} = $props();
 
-	function handleLoginButtonEnter() {
-		if (loginButton) {
-			animate(loginButton, {
+	let buttonElement: HTMLElement | null = $state(null);
+
+	function handlePointerEnter() {
+		if (buttonElement) {
+			animate(buttonElement, {
 				scale: 1.2,
 				duration: 600,
 				rotate: -5,
@@ -16,9 +28,9 @@
 		}
 	}
 
-	function handleLoginButtonLeave() {
-		if (loginButton) {
-			animate(loginButton, {
+	function handlePointerLeave() {
+		if (buttonElement) {
+			animate(buttonElement, {
 				scale: 1,
 				duration: 1000,
 				rotate: 0,
@@ -30,13 +42,15 @@
 
 <a
 	transition:fade={{ duration: 200 }}
-	bind:this={loginButton}
+	bind:this={buttonElement}
 	{href}
 	class={className}
-	onpointerenter={handleLoginButtonEnter}
-	onpointerleave={handleLoginButtonLeave}
+	onpointerenter={handlePointerEnter}
+	onpointerleave={handlePointerLeave}
 >
-	{@html svgHtml}
+	{#if icon}
+		{@render icon()}
+	{/if}
 
-	<p class="">{text}</p>
+	<p>{text}</p>
 </a>
