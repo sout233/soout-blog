@@ -1,34 +1,35 @@
 <script lang="ts">
-    import AniButton from '$lib/components/AniButton.svelte';
-    import { animate } from 'animejs';
-    import { marked } from 'marked';
-    import { onMount } from 'svelte';
+	import AniButton from '$lib/components/AniButton.svelte';
+	import { animate } from 'animejs';
+	import { marked } from 'marked';
+	import { onMount } from 'svelte';
 
-    import hljs from 'highlight.js';
-    
-    import 'highlight.js/styles/atom-one-dark.css'; 
+	import hljs from 'highlight.js';
 
-    let { data } = $props();
+	import 'highlight.js/styles/atom-one-dark.css';
 
-    let contentNode: HTMLElement;
+	let { data } = $props();
 
-    let postHtml = $derived(marked.parse(data.post.content));
+	let contentNode: HTMLElement;
 
-    $effect(() => {
-        if (contentNode && postHtml) {
-            contentNode.querySelectorAll('pre code').forEach((block) => {
-                hljs.highlightElement(block as HTMLElement);
-            });
-        }
-    });
+	let postHtml = $derived(marked.parse(data.post.content));
 
-    onMount(() => {
-        animate(contentNode, {
-            x: [-100, 0],
-            duration: 800,
-            ease: 'outElastic'
-        });
-    });
+	$effect(() => {
+		if (contentNode && postHtml) {
+			contentNode.querySelectorAll('pre code').forEach((block) => {
+				hljs.highlightElement(block as HTMLElement);
+			});
+		}
+	});
+
+	onMount(() => {
+		console.log(data);
+		animate(contentNode, {
+			x: [-100, 0],
+			duration: 800,
+			ease: 'outElastic'
+		});
+	});
 </script>
 
 <svelte:head>
@@ -61,10 +62,26 @@
 		class="noto grid-bg mx-2 mt-10 max-w-2xl rounded-4xl bg-black p-4 text-base-300 shadow-2xl transition-all duration-300 hover:rounded-none hover:p-0 hover:shadow-none md:mx-auto lg:max-w-180"
 	>
 		<h1 class="mb-2 text-3xl font-bold">{data.post.title}</h1>
-		<div class="flex flex-row">
+		<div class="flex w-full flex-row justify-between">
 			<p class="text-sm">
 				{new Date(data.post.created_at).toLocaleString()}
 			</p>
+			{#if data.post.need_login}
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="24"
+					height="24"
+					viewBox="0 0 24 24"
+					class="scale-80 items-end place-self-end"
+				>
+					<path
+						fill="currentColor"
+						fill-rule="evenodd"
+						d="M18 10.5a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3v-6a3 3 0 0 1 3-3v-3a6 6 0 1 1 12 0zm-6-7a4 4 0 0 1 4 4v3H8v-3a4 4 0 0 1 4-4m6 9H6a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-6a1 1 0 0 0-1-1"
+						clip-rule="evenodd"
+					/>
+				</svg>
+			{/if}
 		</div>
 	</header>
 
