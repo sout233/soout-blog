@@ -70,6 +70,7 @@
 				slug={post.slug}
 				desc={post.desc}
 				createdAt={new Date(post.created_at).toLocaleDateString()}
+				locked={post.need_login}
 			/>
 		{/each}
 	</ul>

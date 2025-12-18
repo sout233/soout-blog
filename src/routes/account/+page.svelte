@@ -17,7 +17,7 @@
 
 <div class="h-8 sm:h-2 md:h-0"></div>
 
-<div bind:this={contentNode} class="noto m-4 flex flex-col justify-center">
+<div bind:this={contentNode} class="noto m-4 md:m-10 flex flex-col justify-center">
 	<h1 class="text-4xl font-bold">賬戶登記簿</h1>
 	<div
 		class="mt-4 flex max-w-xl flex-col justify-between border-2 border-base-content bg-base-200 p-2 transition-all hover:m-5 hover:gap-4 hover:rounded-2xl hover:border-base-300 hover:p-4 hover:shadow-2xl"
