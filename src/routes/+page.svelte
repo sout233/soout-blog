@@ -62,7 +62,7 @@
 
 <div class="noto flex flex-col justify-center">
 	<div class="grid-bg-white pointer-events-none absolute top-14 z-0 h-screen w-screen"></div>
-	<div class="h-8 sm:h-2 md:h-0"></div>
+	<div class="h-12 sm:h-2 md:h-0"></div>
 	<ul>
 		{#each data.posts as post}
 			<BlogItem

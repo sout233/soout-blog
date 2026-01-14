@@ -282,7 +282,7 @@
 >
 	<h1
 		bind:this={titleNode}
-		class="bbh-bartle-regular m-0 bg-black p-0 text-4xl font-bold tracking-wide text-base-200 md:text-5xl"
+		class="bbh-bartle-regular m-0 bg-black p-0 text-[32px] font-bold tracking-wide text-base-200 md:text-5xl"
 	>
 		SOOOOOUT BLOG
 	</h1>
